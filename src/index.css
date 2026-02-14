@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+    --color-background: #030303;
+    --color-foreground: #fafafa;
+
+    --color-primary: #C6A87C;
+    --color-primary-foreground: #000000;
+
+    --color-muted: #27272a;
+    --color-muted-foreground: #a1a1aa;
+
+    --color-card: #0a0a0a;
+    --color-card-foreground: #fafafa;
+
+    --color-border: #27272a;
+
+    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        @apply antialiased bg-[#030303] text-foreground;
+    }
+
+    body {
+        @apply min-h-screen overflow-x-hidden;
+        background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+        background-opacity: 0.05;
+    }
+}
+
+@layer utilities {
+    .glass-panel {
+        @apply bg-zinc-900/40 backdrop-blur-md border border-white/10;
+    }
+    
+    .text-balance {
+        text-wrap: balance;
+    }
+}

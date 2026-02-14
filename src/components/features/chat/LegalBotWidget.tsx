@@ -22,7 +22,7 @@ export const LegalBotWidget: React.FC<LegalBotWidgetProps> = ({ webhookUrl, clie
     const finalWebhookUrl = webhookUrl || config.chatbot.webhookUrl;
     const { messages, isLoading, sendMessage, isOpen, setIsOpen, clearHistory } = useChat({ webhookUrl: finalWebhookUrl, clientId });
     const { ui } = config.chatbot;
-    
+
     const [promptIndex, setPromptIndex] = useState(0);
 
     // Rotate prompts every 5 seconds
@@ -38,7 +38,7 @@ export const LegalBotWidget: React.FC<LegalBotWidgetProps> = ({ webhookUrl, clie
         <>
             {/* Floating Trigger Area */}
             <div className="fixed bottom-6 right-6 z-50 flex items-center gap-4">
-                
+
                 {/* Sticky Prompts (Text Bubble) */}
                 <AnimatePresence mode="wait">
                     {!isOpen && (
@@ -82,18 +82,31 @@ export const LegalBotWidget: React.FC<LegalBotWidgetProps> = ({ webhookUrl, clie
                         >
                             {/* Pulse Effect Background */}
                             <div className={`absolute inset-0 rounded-full ${ui.primaryColor} blur-md animate-pulse opacity-50`}></div>
-                            
+
+                            {/* Intrigue Point (The Dot) */}
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 1, duration: 0.5 }}
+                                className="absolute -top-1 -right-1 z-10"
+                            >
+                                <span className="relative flex h-4 w-4">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C6A87C] opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-4 w-4 bg-[#C6A87C] border-2 border-[#030303]"></span>
+                                </span>
+                            </motion.div>
+
                             {/* Button Itself */}
                             <div className={`relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-tr ${ui.gradient} flex items-center justify-center shadow-2xl border border-white/10 overflow-hidden`}>
                                 {/* Glass Shine */}
                                 <div className="absolute top-0 left-0 w-full h-1/2 bg-white/20 blur-sm"></div>
-                                
+
                                 <Bot size={32} className="text-white drop-shadow-md" />
                             </div>
 
-                            {/* Notification Badge */}
+                            {/* Notification Badge (Internal history check) */}
                             {messages.length > 1 && (
-                                <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full border-2 border-[#030303] animate-bounce"></span>
+                                <span className="absolute -top-1 -left-1 w-4 h-4 bg-red-500 rounded-full border-2 border-[#030303] animate-bounce z-10"></span>
                             )}
                         </motion.button>
                     )}
@@ -134,7 +147,8 @@ export const LegalBotWidget: React.FC<LegalBotWidgetProps> = ({ webhookUrl, clie
                                     <Trash2 size={16} />
                                 </button>
                                 <button
-                                    onClick={() => setIsOpen(false)}\n                                    className="p-2 text-white/40 hover:text-white hover:bg-white/5 rounded-full transition-colors"
+                                    onClick={() => setIsOpen(false)}
+                                    className="p-2 text-white/40 hover:text-white hover:bg-white/5 rounded-full transition-colors"
                                 >
                                     <X size={20} />
                                 </button>
@@ -148,10 +162,10 @@ export const LegalBotWidget: React.FC<LegalBotWidgetProps> = ({ webhookUrl, clie
 
                         {/* Input Area */}
                         <div className="p-4 bg-black/40 border-t border-white/5">
-                           <ChatInput onSend={sendMessage} isLoading={isLoading} />
-                           <div className="text-center mt-2">
+                            <ChatInput onSend={sendMessage} isLoading={isLoading} />
+                            <div className="text-center mt-2">
                                 <span className="text-[10px] text-white/20">{ui.footerText}</span>
-                           </div>
+                            </div>
                         </div>
                     </motion.div>
                 )}
